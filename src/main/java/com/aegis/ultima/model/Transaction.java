@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "transaksi")
 public class Transaction {
 
     @Id
-    @Column(name = "id", nullable = false, length = 255)
+    @Column(name = "id", length = 255)
     private String id;
 
     @Column(name = "status", length = 50)
@@ -19,25 +20,25 @@ public class Transaction {
     @Column(name = "total_harga", precision = 10, scale = 2)
     private BigDecimal total;
 
-    @Column(name = "remarks", nullable = true)
+    @Column(name = "remarks")
     private String remarks;
 
-    @Column(name = "created_at", nullable = true)
+    @Column(name = "created_at")
     private Date createdAt;
 
-    @Column(name = "created_by", nullable = true, length = 255)
+    @Column(name = "created_by", length = 255)
     private String createdBy;
 
-    @Column(name = "updated_at", nullable = true)
+    @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Column(name = "updated_by", nullable = true, length = 255)
+    @Column(name = "updated_by", length = 255)
     private String updatedBy;
 
-    @Column(name = "deleted_at", nullable = true)
+    @Column(name = "deleted_at")
     private Date deletedAt;
 
-    @Column(name = "deleted_by", nullable = true, length = 255)
+    @Column(name = "deleted_by", length = 255)
     private String deletedBy;
 
     // Getters and Setters
@@ -120,6 +121,13 @@ public class Transaction {
 
     public void setDeletedBy(String deletedBy) {
         this.deletedBy = deletedBy;
+    }
+
+    @PrePersist
+    private void generateUUID() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
     }
 }
 

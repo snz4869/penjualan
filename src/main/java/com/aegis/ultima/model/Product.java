@@ -14,16 +14,16 @@ public class Product {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "code", length = 100, nullable = false)
+    @Column(name = "code", length = 100)
     private String code;
 
-    @Column(name = "name", length = 100, nullable = false)
+    @Column(name = "name", length = 100)
     private String name;
 
-    @Column(name = "price", precision = 10, scale = 2, nullable = false)
+    @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "stock", nullable = false)
+    @Column(name = "stock")
     private Integer stock;
 
     @Column(name = "description", length = 255)

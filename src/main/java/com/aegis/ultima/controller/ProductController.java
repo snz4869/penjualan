@@ -5,7 +5,8 @@ import com.aegis.ultima.model.User;
 import com.aegis.ultima.model.UserDto;
 import com.aegis.ultima.service.IProductService;
 import com.aegis.ultima.util.BaseClassDomain;
-import com.google.gson.Gson;
+import com.aegis.ultima.util.CommonFunction;
+//import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,50 +23,53 @@ public class ProductController {
     @Autowired
     IProductService productService;
 
+    @Autowired
+    private CommonFunction commonFunction;
+
     private final static Logger logger = LogManager.getLogger(ProductController.class);
 
-    Gson json = new Gson();
+//    Gson json = new Gson();
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
     public BaseClassDomain<Product> addProduct(@RequestBody Product product){
         logger.info("----Request product/add ---->");
-        logger.info(json.toJson(product));
+        logger.info("add request::" + commonFunction.convertJSONtoString(product));
 
         BaseClassDomain<Product> objReturn = new BaseClassDomain<Product>();
         objReturn = productService.saveProduct(product);
 
         logger.info("----Response product/add----");
-        logger.info(json.toJson(objReturn));
+        logger.info("add response::" + commonFunction.convertJSONtoString(objReturn));
         return objReturn;
     }
 
     @RequestMapping(value="/edit", method = RequestMethod.POST)
     public BaseClassDomain<Product> editProduct(@RequestBody Product product){
         logger.info("----Request product/edit ---->");
-        logger.info(json.toJson(product));
+        logger.info("edit request::" + commonFunction.convertJSONtoString(product));
 
         BaseClassDomain<Product> objReturn = new BaseClassDomain<Product>();
         objReturn = productService.editProduct(product, true);
 
         logger.info("----Response product/edit----");
-        logger.info(json.toJson(objReturn));
+        logger.info("edit response::" + commonFunction.convertJSONtoString(objReturn));
         return objReturn;
     }
 
     @RequestMapping(value="/delete", method = RequestMethod.POST)
     public BaseClassDomain<Product> deleteProduct(@RequestBody Product product){
         logger.info("----Request product/delete ---->");
-        logger.info(json.toJson(product));
+        logger.info("delete request::" + commonFunction.convertJSONtoString(product));
 
         BaseClassDomain<Product> objReturn = new BaseClassDomain<Product>();
         objReturn = productService.editProduct(product, false);
 
         logger.info("----Response product/delete----");
-        logger.info(json.toJson(objReturn));
+        logger.info("delete response::" + commonFunction.convertJSONtoString(objReturn));
         return objReturn;
     }
 
-    @RequestMapping(value="/getAll", method = RequestMethod.POST)
+    @RequestMapping(value="/getAll", method = RequestMethod.GET)
     public BaseClassDomain<List<Product>> getProduct(){
         logger.info("----Request product/getAll ---->");
 
@@ -73,7 +77,7 @@ public class ProductController {
         objReturn = productService.getAllProduct();
 
         logger.info("----Response product/getAll----");
-        logger.info(json.toJson(objReturn));
+        logger.info("getAll response::" + commonFunction.convertJSONtoString(objReturn));
         return objReturn;
     }
 }

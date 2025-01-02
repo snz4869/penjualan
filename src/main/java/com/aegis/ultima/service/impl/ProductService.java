@@ -56,10 +56,13 @@ public class ProductService implements IProductService {
                 dtProduct = productRepository.findProductById(product.getId());
                 if (isEdit){
                     dtProduct.setName(product.getName());
+                    dtProduct.setCode(product.getCode());
                     dtProduct.setPrice(product.getPrice());
                     dtProduct.setStock(product.getStock());
                     dtProduct.setDescription(product.getDescription());
-                    dtProduct.setActive(product.getActive());
+                    if (product.getActive() != null) {
+                        dtProduct.setActive(product.getActive());
+                    }
                     dtProduct.setUpdatedAt(DateUtils.getCurrentDate());
                     dtProduct.setUpdatedBy("admin");
                 } else {

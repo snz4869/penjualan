@@ -5,7 +5,8 @@ import com.aegis.ultima.model.TransactionResponseDTO;
 import com.aegis.ultima.model.UserDto;
 import com.aegis.ultima.service.ITransactionService;
 import com.aegis.ultima.util.BaseClassDomain;
-import com.google.gson.Gson;
+import com.aegis.ultima.util.CommonFunction;
+//import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,34 +26,37 @@ public class TransactionController {
     @Autowired
     ITransactionService transactionService;
 
+    @Autowired
+    private CommonFunction commonFunction;
+
     private final static Logger logger = LogManager.getLogger(ProductController.class);
 
-    Gson json = new Gson();
+//    Gson json = new Gson();
 
     @PostMapping("/add")
     public BaseClassDomain<TransactionRequestDTO> createTransaction(@RequestBody TransactionRequestDTO transactionRequest) {
         logger.info("----Request transactions/add ---->");
-        logger.info(json.toJson(transactionRequest));
+        logger.info("add request::" + commonFunction.convertJSONtoString(transactionRequest));
 
         BaseClassDomain<TransactionRequestDTO> objReturn = new BaseClassDomain<TransactionRequestDTO>();
         objReturn = transactionService.createTransaction(transactionRequest);
 
-        logger.info("----Response product/register----");
-        logger.info(json.toJson(objReturn));
+        logger.info("----Response product/add----");
+        logger.info("add response::" + commonFunction.convertJSONtoString(objReturn));
 
         return objReturn;
     }
 
-    @GetMapping("/id")
-    public BaseClassDomain<TransactionResponseDTO> getTransactionById(@RequestBody String id) {
+    @GetMapping("/id/{id}")
+    public BaseClassDomain<TransactionResponseDTO> getTransactionById(@PathVariable String id) {
         logger.info("----Request transactions/id ---->");
-        logger.info(json.toJson(id));
+        logger.info("id request::" + commonFunction.convertJSONtoString(id));
 
         BaseClassDomain<TransactionResponseDTO> objReturn = new BaseClassDomain<TransactionResponseDTO>();
         objReturn = transactionService.getTransactionById(id);
 
         logger.info("----Response product/register----");
-        logger.info(json.toJson(objReturn));
+        logger.info("id response::" + commonFunction.convertJSONtoString(objReturn));
 
         return objReturn;
     }
@@ -61,15 +65,15 @@ public class TransactionController {
     public BaseClassDomain<List<TransactionResponseDTO>> getTransactionsByDateRange(
             @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
-        logger.info("----Request transactions/id ---->");
-        logger.info(json.toJson(startDate));
-        logger.info(json.toJson(endDate));
+        logger.info("----Request transactions/report ---->");
+        logger.info("report request::" + commonFunction.convertJSONtoString(startDate));
+        logger.info("report request::" + commonFunction.convertJSONtoString(endDate));
 
         BaseClassDomain<List<TransactionResponseDTO>> objReturn = new BaseClassDomain<List<TransactionResponseDTO>>();
         objReturn = transactionService.getTransactionsByDateRange(startDate, endDate);
 
-        logger.info("----Response product/register----");
-        logger.info(json.toJson(objReturn));
+        logger.info("----Response product/report----");
+        logger.info("report response::" + commonFunction.convertJSONtoString(objReturn));
 
         return objReturn;
     }

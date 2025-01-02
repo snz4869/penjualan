@@ -6,15 +6,6 @@ public class UserDto {
     private String password;
     private String email;
     private String name;
-    private String role;
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public String getUsername() {
         return username;
@@ -51,7 +42,6 @@ public class UserDto {
     public User getUserFromDto(){
         User user = new User();
         user.setUsername(username);
-        user.setPassword(password);
         user.setEmail(email);
         user.setName(name);
 

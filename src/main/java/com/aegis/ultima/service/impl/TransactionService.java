@@ -80,7 +80,8 @@ public class TransactionService implements ITransactionService {
         BaseClassDomain<TransactionResponseDTO> returnValue = new BaseClassDomain<TransactionResponseDTO>();
         try {
             TransactionResponseDTO transactionResponsetDTO = new TransactionResponseDTO();
-            Transaction transaction = transactionRepository.findTransactionById(id);
+            Transaction transaction = new Transaction();
+            transaction = transactionRepository.findTransactionById(id);
 
             if (transaction != null){
                 transactionResponsetDTO.setId(transaction.getId());

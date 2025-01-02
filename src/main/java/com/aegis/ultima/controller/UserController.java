@@ -4,7 +4,8 @@ import com.aegis.ultima.model.*;
 import com.aegis.ultima.security.TokenProvider;
 import com.aegis.ultima.service.impl.UserService;
 import com.aegis.ultima.util.BaseClassDomain;
-import com.google.gson.Gson;
+import com.aegis.ultima.util.CommonFunction;
+//import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +34,23 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CommonFunction commonFunction;
+
     private final static Logger logger = LogManager.getLogger(ProductController.class);
 
-    Gson json = new Gson();
+//    Gson json = new Gson();
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
     public BaseClassDomain<UserDto> saveUser(@RequestBody UserDto user){
         logger.info("----Request users/register ---->");
-        logger.info(json.toJson(user));
+        logger.info("register request::" + commonFunction.convertJSONtoString(user));
 
         BaseClassDomain<UserDto> objReturn = new BaseClassDomain<UserDto>();
         objReturn = userService.save(user);
 
         logger.info("----Response product/register----");
-        logger.info(json.toJson(objReturn));
+        logger.info("register response::" + commonFunction.convertJSONtoString(objReturn));
 
         return objReturn;
 
@@ -55,13 +59,13 @@ public class UserController {
     @RequestMapping(value="/active", method = RequestMethod.POST)
     public BaseClassDomain<UserDto> userActivation(@RequestBody UserDto user){
         logger.info("----Request users/active ---->");
-        logger.info(json.toJson(user));
+        logger.info("active request::" + commonFunction.convertJSONtoString(user));
 
         BaseClassDomain<UserDto> objReturn = new BaseClassDomain<UserDto>();
         objReturn = userService.activateUser(user);
 
         logger.info("----Response product/active----");
-        logger.info(json.toJson(objReturn));
+        logger.info("active response::" + commonFunction.convertJSONtoString(objReturn));
 
         return objReturn;
     }

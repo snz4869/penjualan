@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User,String> {
 
-    User findByUsername(String username);
+    User findUserByUsername(String username);
 
     @Query("SELECT u.role FROM User u WHERE u.id = :userId")
     Set<String> findRoleNamesByUserId(@Param("userId") String userId);

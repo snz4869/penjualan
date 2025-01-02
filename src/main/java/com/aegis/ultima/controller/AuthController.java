@@ -4,7 +4,8 @@ import com.aegis.ultima.model.AuthToken;
 import com.aegis.ultima.model.LoginUser;
 import com.aegis.ultima.security.TokenProvider;
 import com.aegis.ultima.util.BaseClassDomain;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
+import com.aegis.ultima.util.CommonFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,12 @@ public class AuthController {
     @Autowired
     private TokenProvider jwtTokenUtil;
 
+    @Autowired
+    private CommonFunction commonFunction;
+
     private final static Logger logger = LogManager.getLogger(AuthController.class);
 
-    Gson json = new Gson();
+//    Gson json = new Gson();
 
     @RequestMapping(value = "/token", method = RequestMethod.POST)
     public BaseClassDomain<String> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
@@ -54,7 +58,7 @@ public class AuthController {
         }
 
         logger.info("----Response auth token----");
-        logger.info(json.toJson(objReturn));
+        logger.info("token response::" + commonFunction.convertJSONtoString(objReturn));
         return objReturn;
     }
 
@@ -75,8 +79,8 @@ public class AuthController {
             objReturn.setDescErrorCode("401");
             objReturn.setDescErrorCode("Invalid username or password");
         }
-        logger.info("----Response auth token----");
-        logger.info(json.toJson(objReturn));
+        logger.info("----Response auth login----");
+        logger.info("login response::" + commonFunction.convertJSONtoString(objReturn));
         return objReturn;
     }
 

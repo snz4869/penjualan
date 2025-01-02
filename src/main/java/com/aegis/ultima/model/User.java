@@ -27,6 +27,9 @@ public class User {
     @Column
     private String name;
 
+    @Column(name = "role", length = 50)
+    private String role;
+
     @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isActive = false;
 
@@ -47,9 +50,6 @@ public class User {
 
     @Column(name = "deleted_by", length = 50)
     private String deletedBy;
-
-    @Column(name = "role", length = 50)
-    private String role;
 
     public String getId() {
         return id;

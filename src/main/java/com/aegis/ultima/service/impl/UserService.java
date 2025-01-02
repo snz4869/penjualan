@@ -1,11 +1,8 @@
 package com.aegis.ultima.service.impl;
 
-import com.aegis.ultima.model.Product;
-import com.aegis.ultima.model.Role;
 import com.aegis.ultima.model.User;
 import com.aegis.ultima.model.UserDto;
 import com.aegis.ultima.repository.UserRepository;
-import com.aegis.ultima.service.IRoleService;
 import com.aegis.ultima.service.IUserService;
 import com.aegis.ultima.util.BaseClassDomain;
 import com.aegis.ultima.util.DateUtils;
@@ -17,16 +14,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service(value = "userService")
 public class UserService implements UserDetailsService, IUserService {
-
-    @Autowired
-    private IRoleService roleService;
 
     @Autowired
     private UserRepository userRepository;
@@ -36,7 +28,7 @@ public class UserService implements UserDetailsService, IUserService {
 
     // Load user by username
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findUserByUsername(username);
         if(user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }
@@ -56,15 +48,16 @@ public class UserService implements UserDetailsService, IUserService {
         BaseClassDomain<UserDto> returnValue = new BaseClassDomain<UserDto>();
         try {
             User nUser = new User();
-            nUser = userRepository.findByUsername(user.getUsername());
+            nUser = userRepository.findUserByUsername(user.getUsername());
 
-            if (nUser.getId() != null){
+            if (nUser != null){
                 returnValue.setResponseCode("99");
                 returnValue.setDescErrorCode("Username Already exist");
             } else {
                 nUser = user.getUserFromDto();
                 nUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-                nUser.setIsActive(user.getRole().equals("ADMIN"));
+                nUser.setRole("KASIR");
+                nUser.setIsActive(false);
                 nUser.setCreatedAt(DateUtils.getCurrentDate());
                 nUser.setCreatedBy("admin");
 
@@ -83,9 +76,11 @@ public class UserService implements UserDetailsService, IUserService {
         BaseClassDomain<UserDto> returnValue = new BaseClassDomain<UserDto>();
 
         try {
-            User nUser = userRepository.findByUsername(user.getUsername());
-            if (nUser.getId() != null){
+            User nUser = userRepository.findUserByUsername(user.getUsername());
+            if (nUser != null){
                 nUser.setIsActive(true);
+                nUser.setUpdatedAt(DateUtils.getCurrentDate());
+                nUser.setUpdatedBy("admin");
                 userRepository.save(nUser);
                 returnValue.setResponseSucceed(user);
             } else {

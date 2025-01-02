@@ -3,38 +3,45 @@ package com.aegis.ultima.model;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "transaction_details")
 public class TransactionDetails {
 
     @Id
-    @Column(name = "id", nullable = false, length = 255)
+    @Column(name = "id", length = 255)
     private String id;
 
-    @Column(name = "transaction_id", nullable = false, length = 255)
+    @Column(name = "transaction_id", length = 255)
     private String transactionId;
 
-    @Column(name = "product_code", nullable = false, length = 255)
+    @Column(name = "product_code", length = 255)
     private String productCode;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "price", nullable = false, precision = 10, scale = 2)
+    @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "created_at", nullable = true)
+    @Column(name = "created_at")
     private Date createdAt;
 
-    @Column(name = "created_by", nullable = true, length = 50)
+    @Column(name = "created_by", length = 50)
     private String createdBy;
 
-    @Column(name = "updated_at", nullable = true)
+    @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Column(name = "updated_by", nullable = true, length = 50)
+    @Column(name = "updated_by", length = 50)
     private String updatedBy;
+
+    @Column(name = "deleted_at")
+    private Date deletedAt;
+
+    @Column(name = "deleted_by", length = 50)
+    private String deletedBy;
 
     // Getters and Setters
 
@@ -108,6 +115,29 @@ public class TransactionDetails {
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public String getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(String deletedBy) {
+        this.deletedBy = deletedBy;
+    }
+
+    @PrePersist
+    private void generateUUID() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
     }
 }
 

@@ -49,7 +49,7 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/auth/token").permitAll()
-                        .requestMatchers("/auth/**","/transactions/**").hasAnyRole("ADMIN", "KASIR")
+                        .requestMatchers("/auth/login","/transactions/**").hasAnyRole("ADMIN", "KASIR")
                         .requestMatchers("/product/**","/users/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
                 )
