@@ -1,8 +1,7 @@
 package com.aegis.ultima.controller;
 
-import com.aegis.ultima.model.TransactionRequestDTO;
-import com.aegis.ultima.model.TransactionResponseDTO;
-import com.aegis.ultima.model.UserDto;
+import com.aegis.ultima.dto.TransactionRequestDTO;
+import com.aegis.ultima.dto.TransactionResponseDTO;
 import com.aegis.ultima.service.ITransactionService;
 import com.aegis.ultima.util.BaseClassDomain;
 import com.aegis.ultima.util.CommonFunction;
@@ -11,8 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;

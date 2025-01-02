@@ -1,4 +1,4 @@
-package com.aegis.ultima.model;
+package com.aegis.ultima.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;

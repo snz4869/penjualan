@@ -1,8 +1,7 @@
 package com.aegis.ultima.controller;
 
+import com.aegis.ultima.dto.ProductRequestDTO;
 import com.aegis.ultima.model.Product;
-import com.aegis.ultima.model.User;
-import com.aegis.ultima.model.UserDto;
 import com.aegis.ultima.service.IProductService;
 import com.aegis.ultima.util.BaseClassDomain;
 import com.aegis.ultima.util.CommonFunction;
@@ -10,7 +9,6 @@ import com.aegis.ultima.util.CommonFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,11 +29,11 @@ public class ProductController {
 //    Gson json = new Gson();
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
-    public BaseClassDomain<Product> addProduct(@RequestBody Product product){
+    public BaseClassDomain<ProductRequestDTO> addProduct(@RequestBody ProductRequestDTO product){
         logger.info("----Request product/add ---->");
         logger.info("add request::" + commonFunction.convertJSONtoString(product));
 
-        BaseClassDomain<Product> objReturn = new BaseClassDomain<Product>();
+        BaseClassDomain<ProductRequestDTO> objReturn = new BaseClassDomain<ProductRequestDTO>();
         objReturn = productService.saveProduct(product);
 
         logger.info("----Response product/add----");
@@ -44,11 +42,11 @@ public class ProductController {
     }
 
     @RequestMapping(value="/edit", method = RequestMethod.POST)
-    public BaseClassDomain<Product> editProduct(@RequestBody Product product){
+    public BaseClassDomain<ProductRequestDTO> editProduct(@RequestBody ProductRequestDTO product){
         logger.info("----Request product/edit ---->");
         logger.info("edit request::" + commonFunction.convertJSONtoString(product));
 
-        BaseClassDomain<Product> objReturn = new BaseClassDomain<Product>();
+        BaseClassDomain<ProductRequestDTO> objReturn = new BaseClassDomain<ProductRequestDTO>();
         objReturn = productService.editProduct(product, true);
 
         logger.info("----Response product/edit----");
@@ -57,11 +55,11 @@ public class ProductController {
     }
 
     @RequestMapping(value="/delete", method = RequestMethod.POST)
-    public BaseClassDomain<Product> deleteProduct(@RequestBody Product product){
+    public BaseClassDomain<ProductRequestDTO> deleteProduct(@RequestBody ProductRequestDTO product){
         logger.info("----Request product/delete ---->");
         logger.info("delete request::" + commonFunction.convertJSONtoString(product));
 
-        BaseClassDomain<Product> objReturn = new BaseClassDomain<Product>();
+        BaseClassDomain<ProductRequestDTO> objReturn = new BaseClassDomain<ProductRequestDTO>();
         objReturn = productService.editProduct(product, false);
 
         logger.info("----Response product/delete----");

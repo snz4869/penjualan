@@ -1,5 +1,6 @@
 package com.aegis.ultima.service;
 
+import com.aegis.ultima.dto.ProductRequestDTO;
 import com.aegis.ultima.model.Product;
 import com.aegis.ultima.util.BaseClassDomain;
 
@@ -7,9 +8,9 @@ import java.util.List;
 
 public interface IProductService {
 
-    BaseClassDomain<Product> saveProduct(Product product);
+    BaseClassDomain<ProductRequestDTO> saveProduct(ProductRequestDTO product);
 
-    BaseClassDomain<Product> editProduct(Product product, boolean isEdit);
+    BaseClassDomain<ProductRequestDTO> editProduct(ProductRequestDTO product, boolean isEdit);
 
     BaseClassDomain<List<Product>> getAllProduct();
 

@@ -1,7 +1,6 @@
 package com.aegis.ultima.controller;
 
-import com.aegis.ultima.model.AuthToken;
-import com.aegis.ultima.model.LoginUser;
+import com.aegis.ultima.dto.LoginRequestDTO;
 import com.aegis.ultima.security.TokenProvider;
 import com.aegis.ultima.util.BaseClassDomain;
 //import com.google.gson.Gson;
@@ -9,8 +8,6 @@ import com.aegis.ultima.util.CommonFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,15 +34,15 @@ public class AuthController {
 //    Gson json = new Gson();
 
     @RequestMapping(value = "/token", method = RequestMethod.POST)
-    public BaseClassDomain<String> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
+    public BaseClassDomain<String> generateToken(@RequestBody LoginRequestDTO loginRequestDTO) throws AuthenticationException {
         logger.info("----Request auth token ---->");
-        logger.info("username: "+ loginUser.getUsername());
+        logger.info("username: "+ loginRequestDTO.getUsername());
         BaseClassDomain<String> objReturn = new BaseClassDomain<String>();
         try {
             final Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginUser.getUsername(),
-                            loginUser.getPassword()
+                            loginRequestDTO.getUsername(),
+                            loginRequestDTO.getPassword()
                     )
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -63,15 +60,15 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public BaseClassDomain<String> login(@RequestBody LoginUser loginUser) {
+    public BaseClassDomain<String> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         logger.info("----Request auth login ---->");
-        logger.info("username: "+ loginUser.getUsername());
+        logger.info("username: "+ loginRequestDTO.getUsername());
         BaseClassDomain<String> objReturn = new BaseClassDomain<String>();
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginUser.getUsername(),
-                            loginUser.getPassword()
+                            loginRequestDTO.getUsername(),
+                            loginRequestDTO.getPassword()
                     )
             );
             objReturn.setResponseSucceed("Login successful");

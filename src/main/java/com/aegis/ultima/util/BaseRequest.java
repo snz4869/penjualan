@@ -1,15 +1,15 @@
 package com.aegis.ultima.util;
 
 public class BaseRequest {
-    private String username;
+    private String requestUser;
     private String timestamp;
 
-    public String getUsername() {
-        return username;
+    public String getRequestUser() {
+        return requestUser;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setRequestUser(String requestUser) {
+        this.requestUser = requestUser;
     }
 
     public String getTimestamp() {

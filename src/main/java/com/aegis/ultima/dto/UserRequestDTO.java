@@ -1,6 +1,9 @@
-package com.aegis.ultima.model;
+package com.aegis.ultima.dto;
 
-public class UserDto {
+import com.aegis.ultima.model.User;
+import com.aegis.ultima.util.BaseRequest;
+
+public class UserRequestDTO extends BaseRequest {
 
     private String username;
     private String password;

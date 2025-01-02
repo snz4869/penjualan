@@ -1,14 +1,20 @@
 package com.aegis.ultima.service.impl;
 
+import com.aegis.ultima.dto.TransactionDetailRequestDTO;
+import com.aegis.ultima.dto.TransactionDetailResponseDTO;
+import com.aegis.ultima.dto.TransactionRequestDTO;
+import com.aegis.ultima.dto.TransactionResponseDTO;
 import com.aegis.ultima.model.*;
 import com.aegis.ultima.repository.ProductRepository;
 import com.aegis.ultima.repository.TransactionDetailRepository;
 import com.aegis.ultima.repository.TransactionRepository;
 import com.aegis.ultima.service.ITransactionService;
 import com.aegis.ultima.util.BaseClassDomain;
+import com.aegis.ultima.util.CommonFunction;
 import com.aegis.ultima.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -24,7 +30,13 @@ public class TransactionService implements ITransactionService {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    private CommonFunction commonFunction;
+
+    String loginUsername = commonFunction.getLoggedInUsername();
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public BaseClassDomain<TransactionRequestDTO> createTransaction(TransactionRequestDTO request) {
         BaseClassDomain<TransactionRequestDTO> returnValue = new BaseClassDomain<TransactionRequestDTO>();
         try{
@@ -34,7 +46,7 @@ public class TransactionService implements ITransactionService {
             transaction.setTotal(request.getTotalAmount());
             transaction.setRemarks(request.getRemarks());
             transaction.setCreatedAt(DateUtils.getCurrentDate());
-            transaction.setCreatedBy("kasir");
+            transaction.setCreatedBy(loginUsername);
 
             for (TransactionDetailRequestDTO detail : request.getTransactionDetails()) {
                 Product product = productRepository.findProductByCode(detail.getProductCode());
@@ -63,6 +75,8 @@ public class TransactionService implements ITransactionService {
                 transactionDetail.setProductCode(product.getCode());
                 transactionDetail.setQuantity(detail.getQuantity());
                 transactionDetail.setPrice(product.getPrice());
+                transactionDetail.setCreatedBy(loginUsername);
+                transactionDetail.setCreatedAt(DateUtils.getCurrentDate());
                 transactionDetailRepository.save(transactionDetail);
             }
             transactionRepository.save(transaction);
@@ -70,6 +84,7 @@ public class TransactionService implements ITransactionService {
 
         } catch (Exception e){
             returnValue.setResponseException();
+            throw e;
         }
 
         return returnValue;

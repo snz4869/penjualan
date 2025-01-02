@@ -4,6 +4,8 @@ import com.aegis.ultima.controller.AuthController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -24,5 +26,10 @@ public class CommonFunction {
             logger.error("Error: "+e.getStackTrace());
         }
         return jsonStr;
+    }
+
+    public String getLoggedInUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (authentication != null) ? authentication.getName() : "Unknown";
     }
 }

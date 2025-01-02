@@ -1,7 +1,7 @@
 package com.aegis.ultima.service;
 
-import com.aegis.ultima.model.TransactionRequestDTO;
-import com.aegis.ultima.model.TransactionResponseDTO;
+import com.aegis.ultima.dto.TransactionRequestDTO;
+import com.aegis.ultima.dto.TransactionResponseDTO;
 import com.aegis.ultima.util.BaseClassDomain;
 
 import java.util.Date;

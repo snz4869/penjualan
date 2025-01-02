@@ -1,10 +1,9 @@
-package com.aegis.ultima.model;
+package com.aegis.ultima.dto;
 
-public class LoginUser {
+public class LoginRequestDTO {
     private String username;
     private String password;
 
-    // Getters and Setters for username
     public String getUsername() {
         return username;
     }
@@ -12,7 +11,6 @@ public class LoginUser {
         this.username = username;
     }
 
-    // Getters and Setters for password
     public String getPassword() {
         return password;
     }

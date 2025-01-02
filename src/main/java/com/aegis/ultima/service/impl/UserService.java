@@ -1,10 +1,11 @@
 package com.aegis.ultima.service.impl;
 
 import com.aegis.ultima.model.User;
-import com.aegis.ultima.model.UserDto;
+import com.aegis.ultima.dto.UserRequestDTO;
 import com.aegis.ultima.repository.UserRepository;
 import com.aegis.ultima.service.IUserService;
 import com.aegis.ultima.util.BaseClassDomain;
+import com.aegis.ultima.util.CommonFunction;
 import com.aegis.ultima.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +27,11 @@ public class UserService implements UserDetailsService, IUserService {
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
 
-    // Load user by username
+    @Autowired
+    private CommonFunction commonFunction;
+
+    String loginUsername = commonFunction.getLoggedInUsername();
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username);
         if(user == null){
@@ -44,8 +49,8 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
-    public BaseClassDomain<UserDto> save(UserDto user) {
-        BaseClassDomain<UserDto> returnValue = new BaseClassDomain<UserDto>();
+    public BaseClassDomain<UserRequestDTO> save(UserRequestDTO user) {
+        BaseClassDomain<UserRequestDTO> returnValue = new BaseClassDomain<UserRequestDTO>();
         try {
             User nUser = new User();
             nUser = userRepository.findUserByUsername(user.getUsername());
@@ -59,7 +64,7 @@ public class UserService implements UserDetailsService, IUserService {
                 nUser.setRole("KASIR");
                 nUser.setIsActive(false);
                 nUser.setCreatedAt(DateUtils.getCurrentDate());
-                nUser.setCreatedBy("admin");
+                nUser.setCreatedBy(loginUsername);
 
                 userRepository.save(nUser);
                 returnValue.setResponseSucceed(user);
@@ -72,15 +77,15 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
-    public BaseClassDomain<UserDto> activateUser(UserDto user) {
-        BaseClassDomain<UserDto> returnValue = new BaseClassDomain<UserDto>();
+    public BaseClassDomain<UserRequestDTO> activateUser(UserRequestDTO user) {
+        BaseClassDomain<UserRequestDTO> returnValue = new BaseClassDomain<UserRequestDTO>();
 
         try {
             User nUser = userRepository.findUserByUsername(user.getUsername());
             if (nUser != null){
                 nUser.setIsActive(true);
                 nUser.setUpdatedAt(DateUtils.getCurrentDate());
-                nUser.setUpdatedBy("admin");
+                nUser.setUpdatedBy(loginUsername);
                 userRepository.save(nUser);
                 returnValue.setResponseSucceed(user);
             } else {

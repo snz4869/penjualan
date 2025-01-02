@@ -1,33 +1,15 @@
-package com.aegis.ultima.model;
+package com.aegis.ultima.dto;
+
 
 import java.math.BigDecimal;
 
-public class TransactionDetailResponseDTO {
-    private String Id;
-
-    private String transactionId;
+public class TransactionDetailRequestDTO {
 
     private String productCode;
 
     private Integer quantity;
 
     private BigDecimal price;
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
 
     public String getProductCode() {
         return productCode;
@@ -53,3 +35,4 @@ public class TransactionDetailResponseDTO {
         this.price = price;
     }
 }
+
