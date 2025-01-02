@@ -1,0 +1,412 @@
+{
+	"info": {
+		"_postman_id": "e71608bb-ce3c-45b9-823f-35689b720dc7",
+		"name": "Penjualan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3232/auth/token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"john_doe\",\n  \"password\": \"securePassword123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3232/auth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/auth/login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTczNTc5MTAyMiwiZXhwIjoxNzM1ODA5MDIyfQ.Ylh-lqDvQx9GhRD6V8sNZUz8uXyWRB-kC_0o-tSiEJk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"john_low\",\n  \"password\": \"securePassword123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3232/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/product/add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTczNTc5MTAyMiwiZXhwIjoxNzM1ODA5MDIyfQ.Ylh-lqDvQx9GhRD6V8sNZUz8uXyWRB-kC_0o-tSiEJk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Nasi\",\n    \"price\": \"8000\",\n    \"stock\": \"5\",\n    \"code\": \"N123\",\n    \"description\": \"Nasi 1 bungkus\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3232/product/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"product",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/product/edit",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTczNTc5MTAyMiwiZXhwIjoxNzM1ODA5MDIyfQ.Ylh-lqDvQx9GhRD6V8sNZUz8uXyWRB-kC_0o-tSiEJk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"cbf13cb6-ea8a-4f10-8dee-2496af8ffb77\",\n    \"code\": \"B123\",\n    \"name\": \"Beras\",\n    \"price\": \"200000\",\n    \"stock\": \"15\",\n    \"description\": \"Beras Premium 5kg\",\n    \"active\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3232/product/edit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"product",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/product/delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTczNTc5MTAyMiwiZXhwIjoxNzM1ODA5MDIyfQ.Ylh-lqDvQx9GhRD6V8sNZUz8uXyWRB-kC_0o-tSiEJk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"cbf13cb6-ea8a-4f10-8dee-2496af8ffb77\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3232/product/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"product",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/product/getAll",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTczNTc5MTAyMiwiZXhwIjoxNzM1ODA5MDIyfQ.Ylh-lqDvQx9GhRD6V8sNZUz8uXyWRB-kC_0o-tSiEJk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3232/product/getAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"product",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/users/register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTczNTc5MTAyMiwiZXhwIjoxNzM1ODA5MDIyfQ.Ylh-lqDvQx9GhRD6V8sNZUz8uXyWRB-kC_0o-tSiEJk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"kari99\",\n    \"password\":\"kari99\",\n    \"email\":\"kari@mail.com\",\n    \"name\":\"kari nastasari\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3232/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/users/active",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTczNTc5MTAyMiwiZXhwIjoxNzM1ODA5MDIyfQ.Ylh-lqDvQx9GhRD6V8sNZUz8uXyWRB-kC_0o-tSiEJk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"kari99\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3232/users/active",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"users",
+						"active"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/transactions/add",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huX2RvZSIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTczNTc5MTAyMiwiZXhwIjoxNzM1ODA5MDIyfQ.Ylh-lqDvQx9GhRD6V8sNZUz8uXyWRB-kC_0o-tSiEJk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\":\"COMPLETED\",\n    \"totalAmount\":\"216000\",\n    \"remarks\":\"transaksi berhasil\",\n    \"transactionDetails\": [\n        {\n            \"productCode\":\"N123\",\n            \"quantity\":\"2\",\n            \"price\":\"8000\"\n        },\n        {\n            \"productCode\":\"B123\",\n            \"quantity\":\"1\",\n            \"price\":\"200000\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3232/transactions/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"transactions",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/transactions/id/bcacd3d5-16f2-43d8-8a0a-6c03bd5d73d2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXJpOTkiLCJyb2xlcyI6IlJPTEVfS0FTSVIiLCJpYXQiOjE3MzU3OTQzMzQsImV4cCI6MTczNTgxMjMzNH0.IGyiO0x5022G3rMwzieoGOrw8vkOBBrzWY12v5VL0nU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3232/transactions/id/bcacd3d5-16f2-43d8-8a0a-6c03bd5d73d2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"transactions",
+						"id",
+						"bcacd3d5-16f2-43d8-8a0a-6c03bd5d73d2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3232/transactions/report?startDate=2025-01-02&endDate=2025-01-02",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXJpOTkiLCJyb2xlcyI6IlJPTEVfS0FTSVIiLCJpYXQiOjE3MzU3OTQzMzQsImV4cCI6MTczNTgxMjMzNH0.IGyiO0x5022G3rMwzieoGOrw8vkOBBrzWY12v5VL0nU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3232/transactions/report?startDate=2025-01-02&endDate=2025-01-02",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"transactions",
+						"report"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2025-01-02"
+						},
+						{
+							"key": "endDate",
+							"value": "2025-01-02"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
