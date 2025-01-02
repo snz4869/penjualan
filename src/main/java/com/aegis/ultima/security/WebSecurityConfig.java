@@ -51,7 +51,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/auth/token").permitAll()
                         .requestMatchers("/auth/login","/transactions/**").hasAnyRole("ADMIN", "KASIR")
                         .requestMatchers("/product/**","/users/**").hasAnyRole("ADMIN")
-//                        .anyRequest().authenticated()
+                        .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(unauthorizedEntryPoint)  // Handle unauthorized access (401)
