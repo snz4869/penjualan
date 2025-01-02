@@ -21,11 +21,10 @@ public class ProductService implements IProductService {
     @Autowired
     private CommonFunction commonFunction;
 
-    String loginUsername = commonFunction.getLoggedInUsername();
     @Override
     public BaseClassDomain<ProductRequestDTO> saveProduct(ProductRequestDTO product) {
         BaseClassDomain<ProductRequestDTO> returnValue = new BaseClassDomain<ProductRequestDTO>();
-
+        String loginUsername = commonFunction.getLoggedInUsername();
         try {
             if (product.getCode() != null){
                 if (productRepository.findProductByCode(product.getCode()) != null){
@@ -59,7 +58,7 @@ public class ProductService implements IProductService {
     public BaseClassDomain<ProductRequestDTO> editProduct(ProductRequestDTO product, boolean isEdit) {
         BaseClassDomain<ProductRequestDTO> returnValue = new BaseClassDomain<ProductRequestDTO>();
         Product dtProduct = new Product();
-
+        String loginUsername = commonFunction.getLoggedInUsername();
         try {
             if (product.getCode() != null) {
                 dtProduct = productRepository.findProductByCode(product.getCode());

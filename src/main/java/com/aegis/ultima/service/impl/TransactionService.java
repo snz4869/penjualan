@@ -33,12 +33,11 @@ public class TransactionService implements ITransactionService {
     @Autowired
     private CommonFunction commonFunction;
 
-    String loginUsername = commonFunction.getLoggedInUsername();
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BaseClassDomain<TransactionRequestDTO> createTransaction(TransactionRequestDTO request) {
         BaseClassDomain<TransactionRequestDTO> returnValue = new BaseClassDomain<TransactionRequestDTO>();
+        String loginUsername = commonFunction.getLoggedInUsername();
         try{
             Transaction transaction = new Transaction();
             transaction.setId(UUID.randomUUID().toString());
@@ -56,7 +55,7 @@ public class TransactionService implements ITransactionService {
                     return returnValue;
                 }
 
-                if (product.getStock() < detail.getQuantity()) {
+                if (product.getStock() < detail.getQuantity() && request.getStatus().equals("COMPLETED")) {
                     returnValue.setResponseCode("99");
                     returnValue.setDescErrorCode("Insufficient stock for product: " + product.getName());
                     return returnValue;
@@ -68,7 +67,12 @@ public class TransactionService implements ITransactionService {
                 } else if (request.getStatus().equals("REFUND")){
                     product.setStock(product.getStock() + detail.getQuantity());
                     productRepository.save(product);
+                } else if (!request.getStatus().equals("REFUND") || !request.getStatus().equals("COMPLETED")){
+                    returnValue.setResponseCode("99");
+                    returnValue.setDescErrorCode("Status transaction not found: " + request.getStatus());
+                    return returnValue;
                 }
+
 
                 TransactionDetails transactionDetail = new TransactionDetails();
                 transactionDetail.setTransactionId(transaction.getId());

@@ -50,7 +50,7 @@ public class AuthController {
             objReturn.setResponseSucceed(token);
 
         } catch (AuthenticationException e) {
-            objReturn.setDescErrorCode("401");
+            objReturn.setResponseCode("401");
             objReturn.setDescErrorCode("Invalid username or password");
         }
 
@@ -73,7 +73,7 @@ public class AuthController {
             );
             objReturn.setResponseSucceed("Login successful");
         } catch (AuthenticationException e) {
-            objReturn.setDescErrorCode("401");
+            objReturn.setResponseCode("401");
             objReturn.setDescErrorCode("Invalid username or password");
         }
         logger.info("----Response auth login----");

@@ -54,15 +54,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.warn("Bearer string not found, ignoring the header");
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (username != null) {
+            logger.info("Found username in token: " + username);
+            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                logger.info("Loaded user details for: " + username);
 
-            if (jwtTokenUtil.validateToken(authToken, userDetails)) {
-                UsernamePasswordAuthenticationToken authentication = jwtTokenUtil.getAuthenticationToken(authToken, SecurityContextHolder.getContext().getAuthentication(), userDetails);
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-                logger.info("User authenticated: " + username + ", setting security context");
-                logger.info("User authenticated: " + username + " with roles: " + authentication.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+                    UsernamePasswordAuthenticationToken authentication = jwtTokenUtil.getAuthenticationToken(authToken, SecurityContextHolder.getContext().getAuthentication(), userDetails);
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+                    logger.info("User authenticated: " + username + ", setting security context");
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
         }
 

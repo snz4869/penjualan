@@ -1,5 +1,6 @@
 package com.aegis.ultima.service.impl;
 
+import com.aegis.ultima.controller.AuthController;
 import com.aegis.ultima.model.User;
 import com.aegis.ultima.dto.UserRequestDTO;
 import com.aegis.ultima.repository.UserRepository;
@@ -7,6 +8,8 @@ import com.aegis.ultima.service.IUserService;
 import com.aegis.ultima.util.BaseClassDomain;
 import com.aegis.ultima.util.CommonFunction;
 import com.aegis.ultima.util.DateUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,13 +33,20 @@ public class UserService implements UserDetailsService, IUserService {
     @Autowired
     private CommonFunction commonFunction;
 
-    String loginUsername = commonFunction.getLoggedInUsername();
+    private final static Logger logger = LogManager.getLogger(AuthController.class);
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.info("Attempting to load user with username: " + username); // Log the username
+
         User user = userRepository.findUserByUsername(username);
-        if(user == null){
+        if (user == null){
+            logger.error("User not found: " + username);
+            throw new UsernameNotFoundException("Invalid username or password.");
+        } else if (!user.getIsActive()) {
+            logger.error("User not active: " + username);
             throw new UsernameNotFoundException("Invalid username or password.");
         }
+
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority(user));
     }
 
@@ -51,6 +61,7 @@ public class UserService implements UserDetailsService, IUserService {
     @Override
     public BaseClassDomain<UserRequestDTO> save(UserRequestDTO user) {
         BaseClassDomain<UserRequestDTO> returnValue = new BaseClassDomain<UserRequestDTO>();
+        String loginUsername = commonFunction.getLoggedInUsername();
         try {
             User nUser = new User();
             nUser = userRepository.findUserByUsername(user.getUsername());
@@ -79,7 +90,7 @@ public class UserService implements UserDetailsService, IUserService {
     @Override
     public BaseClassDomain<UserRequestDTO> activateUser(UserRequestDTO user) {
         BaseClassDomain<UserRequestDTO> returnValue = new BaseClassDomain<UserRequestDTO>();
-
+        String loginUsername = commonFunction.getLoggedInUsername();
         try {
             User nUser = userRepository.findUserByUsername(user.getUsername());
             if (nUser != null){
